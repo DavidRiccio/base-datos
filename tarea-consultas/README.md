@@ -54,3 +54,14 @@ select * from Ejemplo
 ```
 
 ## Comandos de modificación y eliminación
+
+- Eliminamos todos los booleanos que sean True
+
+```
+delete from Ejemplo where booleano='1';
+```
+
+```
+update ejemplo set texto='Modificado'
+   ...> where ENTERO < 30;
+```
