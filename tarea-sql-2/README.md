@@ -323,29 +323,81 @@ Salida:
 Actualizar el nombre de un propietario con DNI "12345678A".
 Entrada:
 ```sql
+update Propietarios set nombre='Pepe' where dni='12345678A';
 ```
 salida:
 ```sql
++----+----------+-----------+-----------+
+| id |  nombre  | apellido  |    dni    |
++----+----------+-----------+-----------+
+| 1  | Pepe     | Perez     | 12345678A |
 ```
 Modificar el año de un vehículo con ID 3 a 2022.
 Entrada:
 ```sql
+update Vehiculos set anio='2022' where id='3';
 ```
 salida:
 ```sql
++----+------------+------------+------+----------------+
+| id |   marca    |   modelo   | anio | id_propietario |
++----+------------+------------+------+----------------+
+| 3  | Nissan     | Sentra     | 2022 | 3              |
+
 ```
-Cambiar el modelo de todos los vehículos Nissan a "Micra".
+- Cambiar el modelo de todos los vehículos Nissan a "Micra".
+```sql
+ update Vehiculos set modelo='Micra' where marca='Nissan';
+```
+salida:
+```sql
++----+------------+------------+------+----------------+
+| id |   marca    |   modelo   | anio | id_propietario |
++----+------------+------------+------+----------------+
+| 1  | Ford       | Fiesta     | 2019 | 1              |
+| 2  | Toyota     | Corolla    | 2018 | 2              |
+| 3  | Nissan     | Micra      | 2022 | 3              |
+| 4  | Chevrolet  | Spark      | 2017 | 4              |
+| 5  | Honda      | Civic      | 2016 | 5              |
+| 6  | Ford       | Mustang    | 2021 | 6              |
+| 7  | Toyota     | RAV4       | 2019 | 7              |
+| 8  | Volkwagen  | Golf       | 2020 | 8              |
+| 9  | Honda      | CR-V       | 2018 | 9              |
+| 10 | Nissan     | Micra      | 2017 | 10             |
+| 11 | Chevrolet  | Malibu     | 2019 | 11             |
+| 12 | Toyota     | Camry      | 2020 | 12             |
+| 13 | HondH      | Accord     | 2018 | 13             |
+| 14 | Ford       | Explorer   | 2021 | 14             |
+| 15 | Nissan     | Micra      | 2017 | 15             |
+| 16 | Volkswagen | Jetta      | 2019 | 16             |
+| 17 | Chevrolet  | Equinox    | 2018 | 17             |
+| 18 | Toyota     | Highlander | 2020 | 18             |
+| 19 | HOnda      | Odyssey    | 2016 | 19             |
+| 20 | NIssan     | Murano     | 2019 | 20             |
++----+------------+------------+------+----------------+
+
+```
 Actualizar el apellido de un propietario con ID 7 a "Gomez".
 Entrada:
 ```sql
+update Propietarios set apellido='Gomez' where id='7';
 ```
 salida:
 ```sql
+| 7  | Diego    | Gomez     | 55555555G |
 ```
 Modificar la marca de un vehículo con modelo "Fiesta" a "Renault".
 Entrada:
 ```sql
+update Vehiculos set marca='Renault' where modelo='Fiesta';
 ```
 salida:
 ```sql
+| id |   marca    |   modelo   | anio | id_propietario |
++----+------------+------------+------+----------------+
+| 1  | Renault    | Fiesta     | 2019 | 1              |
+| 2  | Toyota     | Corolla    | 2018 | 2              |
+
 ```
+
+AUTOR: David Riccio
