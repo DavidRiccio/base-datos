@@ -69,3 +69,283 @@ VALUES('Honda','Civic',2016,5);
 
 ...
 ```
+
+## Búsquedas en SQL
+
+
+
+- Seleccionar todos los propietarios
+
+Entrada:
+```sql
+select * from Propietarios;
+```
+Salida:
+```sql
++----+----------+-----------+-----------+
+| id |  nombre  | apellido  |    dni    |
++----+----------+-----------+-----------+
+| 1  | Juan     | Perez     | 12345678A |
+| 2  | Maria    | Lopez     | 87654321B |
+| 3  | Carlos   | Ruiz      | 11111111C |
+| 4  | Laura    | Gomez     | 22222222D |
+| 5  | Pedro    | Martinez  | 33333333E |
+| 6  | Ana      | Fernandez | 44444444F |
+| 7  | Diego    | Sanchez   | 55555555G |
+| 8  | Sofia    | Torres    | 66666666H |
+| 9  | Javier   | Leon      | 77777777I |
+| 10 | Lucia    | Castillo  | 88888888J |
+| 11 | Luis     | Gonzalez  | 99999999K |
+| 12 | Marta    | Diaz      | 10101010L |
+| 13 | Victor   | Vargas    | 11111112M |
+| 14 | Elena    | Castro    | 12121212N |
+| 15 | Roberto  | Blanco    | 13131313O |
+| 16 | Natalia  | Paredes   | 14141414P |
+| 17 | Fernando | Herrera   | 15151515Q |
+| 18 | Clara    | Soto      | 16161616R |
+| 19 | Sergio   | Mendoza   | 17171717S |
+| 20 | Patricia | Navarro   | 18181818T |
++----+----------+-----------+-----------+
+```
+
+- Listar todos los vehículos.
+Entrada:
+```sql
+select * from Vehiculos ;
+```
+Salida:
+```sql
++----+------------+------------+------+----------------+
+| id |   marca    |   modelo   | anio | id_propietario |
++----+------------+------------+------+----------------+
+| 1  | Ford       | Fiesta     | 2019 | 1              |
+| 2  | Toyota     | Corolla    | 2018 | 2              |
+| 3  | Nissan     | Sentra     | 2020 | 3              |
+| 4  | Chevrolet  | Spark      | 2017 | 4              |
+| 5  | Honda      | Civic      | 2016 | 5              |
+| 6  | Ford       | Mustang    | 2021 | 6              |
+| 7  | Toyota     | RAV4       | 2019 | 7              |
+| 8  | Volkwagen  | Golf       | 2020 | 8              |
+| 9  | Honda      | CR-V       | 2018 | 9              |
+| 10 | Nissan     | Altima     | 2017 | 10             |
+| 11 | Chevrolet  | Malibu     | 2019 | 11             |
+| 12 | Toyota     | Camry      | 2020 | 12             |
+| 13 | HondH      | Accord     | 2018 | 13             |
+| 14 | Ford       | Explorer   | 2021 | 14             |
+| 15 | Nissan     | Rogue      | 2017 | 15             |
+| 16 | Volkswagen | Jetta      | 2019 | 16             |
+| 17 | Chevrolet  | Equinox    | 2018 | 17             |
+| 18 | Toyota     | Highlander | 2020 | 18             |
+| 19 | HOnda      | Odyssey    | 2016 | 19             |
+| 20 | NIssan     | Murano     | 2019 | 20             |
++----+------------+------------+------+----------------+
+
+```
+- Seleccionar solo los nombres y apellidos de los propietarios.
+Entrada:
+```sql
+select nombre , apellido from Propietarios ;
+```
+Salida:
+```sql
++----------+-----------+
+|  nombre  | apellido  |
++----------+-----------+
+| Juan     | Perez     |
+| Maria    | Lopez     |
+| Carlos   | Ruiz      |
+| Laura    | Gomez     |
+| Pedro    | Martinez  |
+| Ana      | Fernandez |
+| Diego    | Sanchez   |
+| Sofia    | Torres    |
+| Javier   | Leon      |
+| Lucia    | Castillo  |
+| Luis     | Gonzalez  |
+| Marta    | Diaz      |
+| Victor   | Vargas    |
+| Elena    | Castro    |
+| Roberto  | Blanco    |
+| Natalia  | Paredes   |
+| Fernando | Herrera   |
+| Clara    | Soto      |
+| Sergio   | Mendoza   |
+| Patricia | Navarro   |
++----------+-----------+
+
+```
+- Listar todas las marcas y modelos de los vehículos.
+Entrada:
+```sql
+select marca, modelo from Vehiculos ;
+```
+Salida:
+```sql
++------------+------------+
+|   marca    |   modelo   |
++------------+------------+
+| Ford       | Fiesta     |
+| Toyota     | Corolla    |
+| Nissan     | Sentra     |
+| Chevrolet  | Spark      |
+| Honda      | Civic      |
+| Ford       | Mustang    |
+| Toyota     | RAV4       |
+| Volkwagen  | Golf       |
+| Honda      | CR-V       |
+| Nissan     | Altima     |
+| Chevrolet  | Malibu     |
+| Toyota     | Camry      |
+| HondH      | Accord     |
+| Ford       | Explorer   |
+| Nissan     | Rogue      |
+| Volkswagen | Jetta      |
+| Chevrolet  | Equinox    |
+| Toyota     | Highlander |
+| HOnda      | Odyssey    |
+| NIssan     | Murano     |
++------------+------------+
+
+```
+- Seleccionar solo los 
+propietarios con apellido "Perez".
+Entrada:
+```sql
+ select * from Propietarios where apellido ='Perez';
+```
+Salida:
+```sql
++----+--------+----------+-----------+
+| id | nombre | apellido |    dni    |
++----+--------+----------+-----------+
+| 1  | Juan   | Perez    | 12345678A |
++----+--------+----------+-----------+
+
+```
+- Listar todos los vehículos con año 2019.
+Entrada:
+```sql
+ select * from Vehiculos where anio='2019';
+```
+Salida:
+```sql
++----+------------+--------+------+----------------+
+| id |   marca    | modelo | anio | id_propietario |
++----+------------+--------+------+----------------+
+| 1  | Ford       | Fiesta | 2019 | 1              |
+| 7  | Toyota     | RAV4   | 2019 | 7              |
+| 11 | Chevrolet  | Malibu | 2019 | 11             |
+| 16 | Volkswagen | Jetta  | 2019 | 16             |
+| 20 | NIssan     | Murano | 2019 | 20             |
++----+------------+--------+------+----------------+
+
+```
+- Seleccionar propietarios que tienen vehículos de la marca "Toyota".
+Entrada:
+```sql
+select * from Vehiculos where marca = 'Toyota';
+
+select * from Propietarios where id='2' or id='7' or id='12' or id='18'; 
+
+```
+Salida:
++----+--------+------------+------+----------------+
+| id | marca  |   modelo   | anio | id_propietario |
++----+--------+------------+------+----------------+
+| 2  | Toyota | Corolla    | 2018 | 2              |
+| 7  | Toyota | RAV4       | 2019 | 7              |
+| 12 | Toyota | Camry      | 2020 | 12             |
+| 18 | Toyota | Highlander | 2020 | 18             |
++----+--------+----------+-----------+
+| id | nombre | apellido |    dni    |
++----+--------+----------+-----------+
+| 2  | Maria  | Lopez    | 87654321B |
+| 7  | Diego  | Sanchez  | 55555555G |
+| 12 | Marta  | Diaz     | 10101010L |
+| 18 | Clara  | Soto     | 16161616R |
++----+--------+----------+-----------+
+
+
+```sql
+```
+- Listar vehículos con marca " Ford" y modelo "Fiesta".
+Entrada:
+```sql
+select * from Vehiculos where marca ='Ford' and modelo='Fiesta';
+```
+Salida:
+```sql
++----+-------+--------+------+----------------+
+| id | marca | modelo | anio | id_propietario |
++----+-------+--------+------+----------------+
+| 1  | Ford  | Fiesta | 2019 | 1              |
++----+-------+--------+------+----------------+
+```
+- Seleccionar propietarios con DNI "12345678A".
+Entrada:
+```sql
+select * from Propietarios where dni='12345678A';
+```
+Salida:
+```sql
++----+--------+----------+-----------+
+| id | nombre | apellido |    dni    |
++----+--------+----------+-----------+
+| 1  | Juan   | Perez    | 12345678A |
++----+--------+----------+-----------+
+
+```
+- Listar vehículos que pertenecen al propietario con ID 5.
+Entrada:
+```sql
++----+-------+--------+------+----------------+
+| id | marca | modelo | anio | id_propietario |
++----+-------+--------+------+----------------+
+| 5  | Honda | Civic  | 2016 | 5              |
++----+-------+--------+------+----------------+
+
+```
+Salida:
+```sql
++----+-------+--------+------+----------------+
+| id | marca | modelo | anio | id_propietario |
++----+-------+--------+------+----------------+
+| 5  | Honda | Civic  | 2016 | 5              |
++----+-------+--------+------+----------------+
+
+```
+
+
+## Actualizaciones en SQL
+
+
+
+Actualizar el nombre de un propietario con DNI "12345678A".
+Entrada:
+```sql
+```
+salida:
+```sql
+```
+Modificar el año de un vehículo con ID 3 a 2022.
+Entrada:
+```sql
+```
+salida:
+```sql
+```
+Cambiar el modelo de todos los vehículos Nissan a "Micra".
+Actualizar el apellido de un propietario con ID 7 a "Gomez".
+Entrada:
+```sql
+```
+salida:
+```sql
+```
+Modificar la marca de un vehículo con modelo "Fiesta" a "Renault".
+Entrada:
+```sql
+```
+salida:
+```sql
+```
