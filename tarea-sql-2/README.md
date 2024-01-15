@@ -249,6 +249,7 @@ select * from Propietarios where id='2' or id='7' or id='12' or id='18';
 
 ```
 Salida:
+```sql
 +----+--------+------------+------+----------------+
 | id | marca  |   modelo   | anio | id_propietario |
 +----+--------+------------+------+----------------+
@@ -256,6 +257,7 @@ Salida:
 | 7  | Toyota | RAV4       | 2019 | 7              |
 | 12 | Toyota | Camry      | 2020 | 12             |
 | 18 | Toyota | Highlander | 2020 | 18             |
+----+--------+------------+------+-----------------+
 +----+--------+----------+-----------+
 | id | nombre | apellido |    dni    |
 +----+--------+----------+-----------+
@@ -266,8 +268,8 @@ Salida:
 +----+--------+----------+-----------+
 
 
-```sql
 ```
+
 - Listar vehículos con marca " Ford" y modelo "Fiesta".
 Entrada:
 ```sql
