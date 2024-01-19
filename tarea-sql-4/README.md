@@ -1,10 +1,10 @@
 <h1 align="center"> TAREA 4 </h1>
 
 ## Modelo E-R
-<img src=""> 
+<img src="https://github.com/DavidRiccio/base-datos/blob/main/tarea-sql-4/img/ER.png"> </img>
 
 ## Modelo Relacional
-<img src=""> 
+<img src="https://github.com/DavidRiccio/base-datos/blob/main/tarea-sql-4/img/MR.png"> </img>
 
 ## Normalizacion
  No está normalizado
