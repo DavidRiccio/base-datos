@@ -6,6 +6,8 @@ Repositorio dedicado a la asignatura de base de datos
 
 ## Tareas Consultas
 
+Tareas realizadas en clase para la unidad 5 sqlite3 .
+
 [Tarea-1](/tarea-consultas/README.md)
 
 [Tarea-2](/tarea-sql-2/README.md)
@@ -14,4 +16,4 @@ Repositorio dedicado a la asignatura de base de datos
 
 [Tarea-4](/tarea-sql-4/README.md)
 
-[Tarea5](/tarea-sql-5-examen/README.md)
+[Tarea-5](/tarea-5-examen/README.md)
