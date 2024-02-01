@@ -131,6 +131,7 @@ select * from autor where nombre not REGEXP  'r';
 -- Obtener todos los autores cuyo nombre tiene exactamente 6 caracteres:
 
 -- Seleccionar los libros cuyo título contiene al menos un número:
+select * from libro where titulo REGEXP '[0-9]+{1}';
 
 -- Obtener todos los autores cuyo nombre inicia con una vocal:
 select * from autor where nombre REGEXP '^[aeiou AEIOU]';
