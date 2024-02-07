@@ -25,3 +25,5 @@ Tareas realizadas en clase para la unidad 5 sqlite3 .
 [Tarea-8](/tarea-8/)
 
 [Tarea-9](/tarea-9/)
+
+[Tarea-10](/tarea-10/tarea-10.sql)
