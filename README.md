@@ -17,3 +17,11 @@ Tareas realizadas en clase para la unidad 5 sqlite3 .
 [Tarea-4](/tarea-sql-4/README.md)
 
 [Tarea-5](/tarea-5-examen/README.md)
+
+[Tarea-6](/tarea-6/README.md)
+
+[Tarea-7](/tarea-7/README.md)
+
+[Tarea-8](/tarea-8/README.md)
+
+[Tarea-9](/tarea-9/README.md)
