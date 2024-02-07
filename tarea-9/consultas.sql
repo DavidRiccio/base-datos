@@ -1,5 +1,5 @@
 -- Consulta para obtener el nombre y la edad de los clientes que han comprado coches de la marca Toyota.
-select cl.nombre, cl.Edad from clientes as cl, ventas as v, coches as c where cl.id_cliente=v.id_cliente and c.marca='Toyota' and c.id_coche=v.id_coche;
+select cl.nombre, cli.Edad from clientes as cli, ventas as v, coches as c where cl.id_cliente=v.id_cliente and c.marca='Toyota' and c.id_coche=v.id_coche;
 /**
 ┌────────────┬──────┐
 │   nombre   │ edad │
@@ -8,7 +8,7 @@ select cl.nombre, cl.Edad from clientes as cl, ventas as v, coches as c where cl
 └────────────┴──────┘
 **/
 -- Consulta para calcular el precio promedio de los coches vendidos.
-select ROUND(AVG(precio), 2) as "Precio Promedio" from coches as c, clientes as cl, ventas as v where cl.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
+select ROUND(AVG(precio), 2) as "Precio Promedio" from coches as c, clientes as cli, ventas as v where cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
 /**
 ┌─────────────────┐
 │ Precio Promedio │
@@ -17,7 +17,7 @@ select ROUND(AVG(precio), 2) as "Precio Promedio" from coches as c, clientes as 
 └─────────────────┘
 **/
 -- Consulta para obtener el modelo y la marca de los coches vendidos a clientes menores de 30 años.
-select c.modelo, c.marca from coches as c, ventas as v, clientes as cl where cl.edad<30 and cl.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
+select c.modelo, c.marca from coches as c, ventas as v, clientes as cli where cli.edad<30 and cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
 /**
 ┌────────────────┬───────────┐
 │     modelo     │   marca   │
@@ -46,7 +46,7 @@ select c.marca, COUNT(v.id_coche) as "Ventas por marca" from ventas as v, coches
 └────────────┴──────────────────┘
 **/
 -- Consulta para obtener el nombre y la dirección de los clientes que han llevado a reparar sus coches en 2024.
-select cl.nombre, cl.direccion from clientes as cl, reparación as r where cl.id_cliente=r.id_cliente and r.fecha_reparación regexp '2024';
+select cli.nombre, cli.direccion from clientes as cli, reparación as r where cli.id_cliente=r.id_cliente and r.fecha_reparación regexp '2024';
 /**
 ┌─────────────────┬────────────────┐
 │     nombre      │   direccion    │
@@ -70,7 +70,7 @@ select cl.nombre, cl.direccion from clientes as cl, reparación as r where cl.id
 ???
 **/
 -- Consulta para obtener el nombre y la edad de los clientes que han comprado coches de más de 30000 euros.
-select cl.nombre, cl.edad from clientes as cl, ventas as v, coches as c where cl.id_cliente=v.id_cliente and c.precio>30000 and c.id_coche=v.id_coche;
+select cli.nombre, cli.edad from clientes as cli, ventas as v, coches as c where cli.id_cliente=v.id_cliente and c.precio>30000 and c.id_coche=v.id_coche;
 /**
 ┌─────────────────┬──────┐
 │     nombre      │ edad │
