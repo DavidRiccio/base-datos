@@ -18,10 +18,10 @@ Tareas realizadas en clase para la unidad 5 sqlite3 .
 
 [Tarea-5](/tarea-5-examen/README.md)
 
-[Tarea-6](/tarea-6/README.md)
+[Tarea-6](/tarea-6/)
 
-[Tarea-7](/tarea-7/README.md)
+[Tarea-7](/tarea-7/)
 
-[Tarea-8](/tarea-8/README.md)
+[Tarea-8](/tarea-8/)
 
-[Tarea-9](/tarea-9/README.md)
+[Tarea-9](/tarea-9/)
