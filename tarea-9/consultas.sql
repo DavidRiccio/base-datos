@@ -81,7 +81,7 @@ select cli.nombre, cli.edad from clientes as cli, ventas as v, coches as c where
 └─────────────────┴──────┘
 **/
 -- Consulta para calcular el precio medio de los coches vendidos en 2023.
-select ROUND(AVG(precio), 2) as "Precio Promedio 2023" from coches as c, clientes as cli, ventas as v where cli.id_cliiente=v.id_cliiente and c.id_coche=v.id_coche and v.fecha_venta regexp '2023';
+select ROUND(AVG(precio), 2) as "Precio Promedio 2023" from coches as c, clientes as cli, ventas as v where cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche and v.fecha_venta regexp '2023';
 /**
 ┌──────────────────────┐
 │ Precio Promedio 2023 │
@@ -90,7 +90,7 @@ select ROUND(AVG(precio), 2) as "Precio Promedio 2023" from coches as c, cliente
 └──────────────────────┘
 **/
 -- Consulta para obtener el nombre y la dirección de los cliientes que han comprado coches de la marca Ford.
-select cli.nombre, cli.direccion from cliientes as cli, ventas as v, coches as c where cli.id_cliiente=v.id_cliiente and c.marca='Ford' and c.id_coche=v.id_coche;
+select cli.nombre, cli.direccion from cliientes as cli, ventas as v, coches as c where cli.id_cliente=v.id_cliente and c.marca='Ford' and c.id_coche=v.id_coche;
 /**
 ┌──────────────┬──────────────┐
 │    nombre    │  direccion   │
@@ -108,7 +108,7 @@ select strftime('%Y', fecha_venta) as año, COUNT(id_coche) as "Ventas por año"
 └──────┴────────────────┘
 **/
 -- Consulta para obtener el nombre y la edad de los cliientes que han comprado coches de más de 30000 euros y llevado a reparar sus coches.
-select cli.nombre, cli.edad from cliientes as cli, ventas as v, coches as c, reparación as r where cli.id_cliiente=v.id_cliiente and c.precio>30000 and c.id_coche=v.id_coche and cli.id_cliiente=r.id_cliiente;
+select cli.nombre, cli.edad from cliientes as cli, ventas as v, coches as c, reparación as r where cli.id_cliente=v.id_cliente and c.precio>30000 and c.id_coche=v.id_coche and cli.id_cliente=r.id_cliente;
 /**
 ┌─────────────────┬──────┐
 │     nombre      │ edad │
@@ -122,7 +122,7 @@ select cli.nombre, cli.edad from cliientes as cli, ventas as v, coches as c, rep
 └─────────────────┴──────┘
 **/
 -- Consulta para calcular el precio total de los coches vendidos a cliientes menores de 30 años.
-select SUM(c.precio) as "Precio total" from coches as c, ventas as v, cliientes as cli where cli.edad<30 and cli.id_cliiente=v.id_cliiente and c.id_coche=v.id_coche;
+select SUM(c.precio) as "Precio total" from coches as c, ventas as v, cliientes as cli where cli.edad<30 and cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
 /**
 ┌───────────────┐
 │ SUM(c.precio) │
@@ -158,10 +158,10 @@ select c.modelo, c.marca from coches as c, ventas as v, reparación as r where c
 └────────────────┴────────────┘
 **/
 -- Consulta para contar el número de coches vendidos por cliiente.
-select v.id_cliiente, COUNT(*) as "Coches vendidos" from coches as c, ventas as v where c.id_coche=v.id_coche group by v.id_cliiente;
+select v.id_cliente, COUNT(*) as "Coches vendidos" from coches as c, ventas as v where c.id_coche=v.id_coche group by v.id_cliente;
 /**
 ┌────────────┬─────────────────┐
-│ id_cliiente │ Coches vendidos │
+│ id_cliente │ Coches vendidos │
 ├────────────┼─────────────────┤
 │ 1          │ 1               │
 │ 2          │ 1               │
@@ -175,7 +175,7 @@ select v.id_cliiente, COUNT(*) as "Coches vendidos" from coches as c, ventas as 
 └────────────┴─────────────────┘
 **/
 -- Consulta para obtener el nombre y el precio de los coches vendidos a cliientes mayores de 35 años.
-select cli.nombre, c.precio from coches as c, ventas as v, cliientes as cli where cli.edad>35 and cli.id_cliiente=v.id_cliiente and c.id_coche=v.id_coche;
+select cli.nombre, c.precio from coches as c, ventas as v, cliientes as cli where cli.edad>35 and cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche;
 /**
 ┌─────────────────┬─────────┐
 │     nombre      │ precio  │
@@ -185,7 +185,7 @@ select cli.nombre, c.precio from coches as c, ventas as v, cliientes as cli wher
 └─────────────────┴─────────┘
 **/
 -- Consulta para calcular el precio total de los coches vendidos a cliientes que viven en una calle (en la dirección).
-select SUM(c.precio) as "Precio total" from coches as c, ventas as v, cliientes as cli where cli.id_cliiente=v.id_cliiente and c.id_coche=v.id_coche and cli.direccion regexp '[cC]alle';
+select SUM(c.precio) as "Precio total" from coches as c, ventas as v, cliientes as cli where cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche and cli.direccion regexp '[cC]alle';
 /**
 ┌──────────────┐
 │ Precio total │
@@ -197,7 +197,7 @@ select SUM(c.precio) as "Precio total" from coches as c, ventas as v, cliientes 
 select cli.nombre, cli.direccion from coches as c, ventas as v, reparación as r, cliientes as cli 
 where c.id_coche=v.id_coche 
 and c.precio>30000 
-and cli.id_cliiente=v.id_cliiente 
+and cli.id_cliente=v.id_cliente 
 and c.id_coche=r.id_coche 
 and r.fecha_reparación regexp '2024';
 /**
@@ -214,7 +214,7 @@ and r.fecha_reparación regexp '2024';
 select ROUND(AVG(precio), 2) as "Precio medio" from coches as c, ventas as v, reparación as r, cliientes as cli 
 where c.id_coche=v.id_coche 
 and cli.edad<30 
-and cli.id_cliiente=v.id_cliiente 
+and cli.id_cliente=v.id_cliente 
 and c.id_coche=r.id_coche 
 and v.fecha_venta regexp '2023';
 /**
@@ -225,7 +225,7 @@ and v.fecha_venta regexp '2023';
 └──────────────┘
 **/
 -- Consulta para obtener el modelo y el año de los coches vendidos por cliientes que tienen una dirección que contiene la palabra "Avenida".
-select c.modelo, c.año from coches as c, ventas as v, cliientes as cli where cli.id_cliiente=v.id_cliiente and c.id_coche=v.id_coche and cli.direccion regexp '[Aa]venida';
+select c.modelo, c.año from coches as c, ventas as v, cliientes as cli where cli.id_cliente=v.id_cliente and c.id_coche=v.id_coche and cli.direccion regexp '[Aa]venida';
 /**
 ┌────────────────┬──────┐
 │     modelo     │ año  │
@@ -238,7 +238,7 @@ select c.modelo, c.año from coches as c, ventas as v, cliientes as cli where cl
 └────────────────┴──────┘
 **/
 -- Consulta para contar el número de reparaciones realizadas en 2024 por cada cliiente.
-select cli.id_cliiente, COUNT(*) as "Numero reparaciones" from cliientes as cli, reparación as r where cl.id_cliente=r.id_cliente and fecha_reparación regexp '2024' group by r.id_cliente;
+select cli.id_cliente, COUNT(*) as "Numero reparaciones" from cliientes as cli, reparación as r where cl.id_cliente=r.id_cliente and fecha_reparación regexp '2024' group by r.id_cliente;
 /**
 ┌────────────┬─────────────────────┐
 │ id_cliente │ Numero reparaciones │
