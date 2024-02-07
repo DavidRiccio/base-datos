@@ -53,10 +53,24 @@ select a.nombre,a.edad, c.profesor from Alumnos as a, Clases as c inner join Ins
 └────────┴──────┴────────────┘
 */
 - Obtener el nombre del alumno y la dirección de las clases en las que está inscrito.
-select a.nombre,c.profesor, c.nombre  from Alumnos as a, Clases as c inner join Inscripciones as i on a.id=i.id_alumno and c.id=i.id_clase;
+select a.nombre,a.direccion,c.nombre  from Alumnos as a, Clases as c inner join Inscripciones as i on a.id=i.id_alumno and c.id=i.id_clase;
+/*
+┌────────┬───────────┬────────────────────────┐
+│ nombre │ direccion │         nombre         │
+├────────┼───────────┼────────────────────────┤
+│ Juan   │ Calle A   │ Matemáticas 101        │
+│ Juan   │ Calle A   │ Historia Antigua       │
+│ María  │ Calle B   │ Literatura Moderna     │
+│ María  │ Calle B   │ Biología Avanzada      │
+│ Pedro  │ Calle C   │ Química Orgánica       │
+│ Pedro  │ Calle C   │ Física Cuántica        │
+│ Laura  │ Calle D   │ Arte Contemporáneo     │
+│ Laura  │ Calle D   │ Inglés Avanzado        │
+│ Carlos │ Calle E   │ Economía Internacional │
+│ Ana    │ Calle F   │ Derecho Penal          │
+└────────┴───────────┴────────────────────────┘
+*/
 - Obtener el nombre del alumno y el nombre de la clase junto con el profesor.
-
-- Obtener el nombre del alumno, la materia y el nombre del profesor de las clases en las que está inscrito.
 select a.nombre,c.profesor, c.nombre  from Alumnos as a, Clases as c inner join Inscripciones as i on a.id=i.id_alumno and c.id=i.id_clase;
 /*
 ┌────────┬────────────┬────────────────────────┐
@@ -73,6 +87,26 @@ select a.nombre,c.profesor, c.nombre  from Alumnos as a, Clases as c inner join 
 │ Carlos │ Profesor R │ Economía Internacional │
 │ Ana    │ Profesor Q │ Derecho Penal          │
 └────────┴────────────┴────────────────────────┘
+*/
+- Obtener el nombre del alumno, la materia y el nombre del profesor de las clases en las que está inscrito.
+select a.nombre,c.materia, c.profesor  from Alumnos as a, Clases as c inner join Inscripciones as i on a.id=i.id_alumno and c.id=i.id_clase;
+/*
+┌────────┬─────────────┬────────────┐
+│ nombre │   materia   │  profesor  │
+├────────┼─────────────┼────────────┤
+│ Juan   │ Matemáticas │ Profesor X │
+│ Juan   │ Historia    │ Profesor Y │
+│ María  │ Literatura  │ Profesor Z │
+│ María  │ Biología    │ Profesor W │
+│ Pedro  │ Química     │ Profesor V │
+│ Pedro  │ Física      │ Profesor U │
+│ Laura  │ Arte        │ Profesor T │
+│ Laura  │ Idiomas     │ Profesor S │
+│ Carlos │ Economía    │ Profesor R │
+│ Ana    │ Derecho     │ Profesor Q │
+└────────┴─────────────┴────────────┘
+*/
+
 */
 - Obtener el nombre del alumno, la edad y la materia de las clases en las que está inscrito.
  select a.nombre,a.edad, c.materia  from Alumnos as a, Clases as c inner join Inscripciones as i on a.id=i.id_alumno and c.id=i.id_clase;
