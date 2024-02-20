@@ -353,7 +353,16 @@ select max(p.total) from pedido as p group by strftime('%y',p.fecha);/*
 └──────────────┘
 */
     --Devuelve cuál ha sido el pedido de máximo valor que se ha realizado cada año.
-
+select strftime('%Y',fecha), count(id_pedido) from pedido group by strftime('%Y',fecha);/*
+┌──────────────────────┬──────────────────┐
+│ strftime('%Y',fecha) │ count(id_pedido) │
+├──────────────────────┼──────────────────┤
+│ 2015                 │ 2                │
+│ 2016                 │ 5                │
+│ 2017                 │ 6                │
+│ 2019                 │ 3                │
+└──────────────────────┴──────────────────┘
+*/
     --Devuelve el número total de pedidos que se han realizado cada año.
 
 --Subconsultas Con operadores básicos de comparación
