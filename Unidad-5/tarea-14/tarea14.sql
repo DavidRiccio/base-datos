@@ -163,7 +163,7 @@
     └──────────────────────────────────────┴─────────────┴──────────┘
     */
         --Devuelve un listado con el nombre de todos los departamentos que tienen profesores que imparten alguna asignatura en el Grado en Ingeniería Informática (Plan 2015).
-        
+
         --Devuelve un listado con todos los alumnos que se han matriculado en alguna asignatura durante el curso escolar 2018/2019.
 
     --Consultas multitabla (Where)
@@ -200,10 +200,38 @@
         └───────────┘
 
     --Calcula cuántos profesores hay en cada departamento. El resultado sólo debe mostrar dos columnas, una con el nombre del departamento y otra con el número de profesores que hay en ese departamento. El resultado sólo debe incluir los departamentos que tienen profesores asociados y deberá estar ordenado de mayor a menor por el número de profesores.
-
+            SELECT d.nombre, count(p.id_profesor) from profesor as p join departamento as d on p.id_departamento=d.id
+            ...> join persona as pe on pe.id=p.id_profesor group by d.nombre;
+            /*
+            ┌────────────────────┬──────────────────────┐
+            │       nombre       │ count(p.id_profesor) │
+            ├────────────────────┼──────────────────────┤
+            │ Agronomía          │ 1                    │
+            │ Economía y Empresa │ 2                    │
+            │ Educación          │ 3                    │
+            │ Informática        │ 2                    │
+            │ Matemáticas        │ 2                    │
+            │ Química y Física   │ 2                    │
+            └────────────────────┴──────────────────────┘
+            */
     --Devuelve un listado con todos los departamentos y el número de profesores que hay en cada uno de ellos. Tenga en cuenta que pueden existir departamentos que no tienen profesores asociados. Estos departamentos también tienen que aparecer en el listado.
 
     --Devuelve un listado con el nombre de todos los grados existentes en la base de datos y el número de asignaturas que tiene cada uno. Tenga en cuenta que pueden existir grados que no tienen asignaturas asociadas. Estos grados también tienen que aparecer en el listado. El resultado deberá estar ordenado de mayor a menor por el número de asignaturas.
+        /*select g.nombre , count(a.id) from grado as g join asignatura a group by g.id order by count(a.id);
+        ┌────────────────────────────────────────────────────────┬─────────────┐
+        │                         nombre                         │ count(a.id) │
+        ├────────────────────────────────────────────────────────┼─────────────┤
+        │ Grado en Ingeniería Agrícola (Plan 2015)               │ 83          │
+        │ Grado en Ingeniería Eléctrica (Plan 2014)              │ 83          │
+        │ Grado en Ingeniería Electrónica Industrial (Plan 2010) │ 83          │
+        │ Grado en Ingeniería Informática (Plan 2015)            │ 83          │
+        │ Grado en Ingeniería Mecánica (Plan 2010)               │ 83          │
+        │ Grado en Ingeniería Química Industrial (Plan 2010)     │ 83          │
+        │ Grado en Biotecnología (Plan 2015)                     │ 83          │
+        │ Grado en Ciencias Ambientales (Plan 2009)              │ 83          │
+        │ Grado en Matemáticas (Plan 2010)                       │ 83          │
+        │ Grado en Química (Plan 2009)                           │ 83          │
+        └────────────────────────────────────────────────────────┴─────────────┘
 
     --Devuelve un listado con el nombre de todos los grados existentes en la base de datos y el número de asignaturas que tiene cada uno, de los grados que tengan más de 40 asignaturas asociadas.
 
@@ -216,8 +244,19 @@
 --Subconsultas
 
     --Devuelve todos los datos del alumno más joven.
+        
+        
+        select * from persona where tipo='alumno' order by fecha_nacimiento DESC limit 1;
+        /*
+        ┌────┬───────────┬────────┬───────────┬───────────┬─────────┬───────────────────┬──────────┬──────────────────┬──────┬────────┐
+        │ id │    nif    │ nombre │ apellido1 │ apellido2 │ ciudad  │     direccion     │ telefono │ fecha_nacimiento │ sexo │  tipo  │
+        ├────┼───────────┼────────┼───────────┼───────────┼─────────┼───────────────────┼──────────┼──────────────────┼──────┼────────┤
+        │ 4  │ 17105885A │ Pedro  │ Heller    │ Pagac     │ Almería │ C/ Estrella fugaz │          │ 2000/10/05       │ H    │ alumno │
+        └────┴───────────┴────────┴───────────┴───────────┴─────────┴───────────────────┴──────────┴──────────────────┴──────┴────────┘
+        */
 
     --Devuelve un listado con los profesores que no están asociados a un departamento.
+        select p.*, d.nombre from profesor as p join departamento as d on d.id=p.id_departamento where p.id_departamento is null;
 
     --Devuelve un listado con los departamentos que no tienen profesores asociados.
 
