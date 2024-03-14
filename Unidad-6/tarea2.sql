@@ -159,7 +159,37 @@ select * from cliente where nombre regexp '^M';
 
 --Consultas de ejemplo para practicar joins
 
-
+--1 Seleccionar todos los clientes y sus órdenes, incluso si no tienen órdenes
+SELECT c.id_cliente, c.nombre AS nombre_cliente, o.id_orden, o.id_producto, o.cantidad
+    -> FROM clientes c
+    -> LEFT JOIN ordenes o ON c.id_cliente = o.id_cliente;
+    /*
++------------+----------------+----------+-------------+----------+
+| id_cliente | nombre_cliente | id_orden | id_producto | cantidad |
++------------+----------------+----------+-------------+----------+
+|          1 | Cliente 1      |        1 |           1 |        2 |
+|          2 | Cliente 2      |        2 |           2 |        1 |
+|          3 | Cliente 3      |        3 |           3 |        3 |
+|          4 | Cliente 4      |        4 |           4 |        2 |
+|          5 | Cliente 5      |        5 |           5 |        1 |
+|          6 | Cliente 6      |        6 |           6 |        2 |
+|          7 | Cliente 7      |        7 |           7 |        3 |
+|          8 | Cliente 8      |        8 |           8 |        2 |
+|          9 | Cliente 9      |        9 |           9 |        1 |
+|         10 | Cliente 10     |       10 |          10 |        2 |
+|         11 | Cliente 11     |       11 |          11 |        3 |
+|         12 | Cliente 12     |       12 |          12 |        2 |
+|         13 | Cliente 13     |       13 |          13 |        1 |
+|         14 | Cliente 14     |       14 |          14 |        2 |
+|         15 | Cliente 15     |       15 |          15 |        3 |
+|         16 | Cliente 16     |       16 |          16 |        2 |
+|         17 | Cliente 17     |       17 |          17 |        1 |
+|         18 | Cliente 18     |       18 |          18 |        2 |
+|         19 | Cliente 19     |       19 |          19 |        3 |
+|         20 | Cliente 20     |       20 |          20 |        2 |
++------------+----------------+----------+-------------+----------+
+*/
+--2 Seleccionar todas las órdenes junto con los productos correspondientes
 select o.*, p.nombre from ordenes as o join productos as p on o.id_producto=p.id_producto;
 /*
 +----------+------------+-------------+----------+-------------+
@@ -187,6 +217,7 @@ select o.*, p.nombre from ordenes as o join productos as p on o.id_producto=p.id
 |       20 |         20 |          20 |        2 | Producto 20 |
 +----------+------------+-------------+----------+-------------+
 */
+--3 Mostrar el nombre de los clientes que han realizado órdenes de productos que cuestan más de 50
 select c.nombre,p.nombre,p.precio,o.id_orden from clientes as c join or
 denes as o on o.id_cliente=c.id_cliente join productos as p on p.id_producto=o.id_producto where p.precio > 50;
 /*
@@ -211,9 +242,15 @@ denes as o on o.id_cliente=c.id_cliente join productos as p on p.id_producto=o.i
 | Cliente 20 | Producto 20 |  200.5 |       20 |
 +------------+-------------+--------+----------+
 */
-select p.nombre from productos as p join ordenes as o on p.id_producto=o.id_producto where p.id_producto not in (select o.id_producto from ordenes) ;
+
+--4 Obtener el nombre de los productos que no se han ordenado aún
+SELECT p.nombre AS nombre_producto
+FROM productos p
+LEFT JOIN ordenes o ON p.id_producto = o.id_producto
+WHERE o.id_producto IS NULL;
 
 
+--5 Mostrar el nombre del cliente, el producto y la cantidad para todas las órdenes
 select c.nombre,p.nombre, o.cantidad from clientes as c join ordenes as o on o.id_cliente=c.id_cliente join productos as p on o.id_producto=p.id_producto;
 /*
 +------------+-------------+----------+
@@ -241,6 +278,7 @@ select c.nombre,p.nombre, o.cantidad from clientes as c join ordenes as o on o.i
 | Cliente 20 | Producto 20 |        2 |
 +------------+-------------+----------+
 */
+--6 Obtener el nombre de los productos junto con los nombres de los clientes que han realizado órdenes de esos productos
 select p.nombre, c.nombre from clientes as c join ordenes as o on c.id_cliente=o.id_cliente join productos as p on p.id_producto=o.id_producto;
 /*
 +-------------+------------+
@@ -268,7 +306,39 @@ select p.nombre, c.nombre from clientes as c join ordenes as o on c.id_cliente=o
 | Producto 20 | Cliente 20 |
 +-------------+------------+
 */
+--7 Mostrar todas las órdenes con sus clientes y productos, incluso si no hay órdenes
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto, o.cantidad
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> LEFT JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+----------+
+| id_orden | nombre_cliente | nombre_producto | cantidad |
++----------+----------------+-----------------+----------+
+|        1 | Cliente 1      | Producto 1      |        2 |
+|        2 | Cliente 2      | Producto 2      |        1 |
+|        3 | Cliente 3      | Producto 3      |        3 |
+|        4 | Cliente 4      | Producto 4      |        2 |
+|        5 | Cliente 5      | Producto 5      |        1 |
+|        6 | Cliente 6      | Producto 6      |        2 |
+|        7 | Cliente 7      | Producto 7      |        3 |
+|        8 | Cliente 8      | Producto 8      |        2 |
+|        9 | Cliente 9      | Producto 9      |        1 |
+|       10 | Cliente 10     | Producto 10     |        2 |
+|       11 | Cliente 11     | Producto 11     |        3 |
+|       12 | Cliente 12     | Producto 12     |        2 |
+|       13 | Cliente 13     | Producto 13     |        1 |
+|       14 | Cliente 14     | Producto 14     |        2 |
+|       15 | Cliente 15     | Producto 15     |        3 |
+|       16 | Cliente 16     | Producto 16     |        2 |
+|       17 | Cliente 17     | Producto 17     |        1 |
+|       18 | Cliente 18     | Producto 18     |        2 |
+|       19 | Cliente 19     | Producto 19     |        3 |
+|       20 | Cliente 20     | Producto 20     |        2 |
++----------+----------------+-----------------+----------+
 
+*/
+--8 Obtener el nombre de los productos junto con los nombres de los clientes que han realizado órdenes de esos productos
 select o.*, c.nombre, p.nombre from ordenes as o join clientes as c on
 o.id_cliente=c.id_cliente join productos as p on p.id_producto=o.id_producto;
 /*
@@ -297,7 +367,72 @@ o.id_cliente=c.id_cliente join productos as p on p.id_producto=o.id_producto;
 |       20 |         20 |          20 |        2 | Cliente 20 | Producto 20 |
 +----------+------------+-------------+----------+------------+-------------+
 */
+--9  Mostrar todas las órdenes con sus clientes y productos, incluso si no hay órdenes
 
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto, o.cantidad
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> LEFT JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+----------+
+| id_orden | nombre_cliente | nombre_producto | cantidad |
++----------+----------------+-----------------+----------+
+|        1 | Cliente 1      | Producto 1      |        2 |
+|        2 | Cliente 2      | Producto 2      |        1 |
+|        3 | Cliente 3      | Producto 3      |        3 |
+|        4 | Cliente 4      | Producto 4      |        2 |
+|        5 | Cliente 5      | Producto 5      |        1 |
+|        6 | Cliente 6      | Producto 6      |        2 |
+|        7 | Cliente 7      | Producto 7      |        3 |
+|        8 | Cliente 8      | Producto 8      |        2 |
+|        9 | Cliente 9      | Producto 9      |        1 |
+|       10 | Cliente 10     | Producto 10     |        2 |
+|       11 | Cliente 11     | Producto 11     |        3 |
+|       12 | Cliente 12     | Producto 12     |        2 |
+|       13 | Cliente 13     | Producto 13     |        1 |
+|       14 | Cliente 14     | Producto 14     |        2 |
+|       15 | Cliente 15     | Producto 15     |        3 |
+|       16 | Cliente 16     | Producto 16     |        2 |
+|       17 | Cliente 17     | Producto 17     |        1 |
+|       18 | Cliente 18     | Producto 18     |        2 |
+|       19 | Cliente 19     | Producto 19     |        3 |
+|       20 | Cliente 20     | Producto 20     |        2 |
++----------+----------------+-----------------+----------+
+*/
+--10 Obtener el nombre de los clientes junto con el número total de órdenes que han realizado
+SELECT c.nombre AS nombre_cliente, COUNT(o.id_orden) AS total_ordenes
+    -> FROM clientes c
+    -> LEFT JOIN ordenes o ON c.id_cliente = o.id_cliente
+    -> GROUP BY c.nombre;
+    /*
++----------------+---------------+
+| nombre_cliente | total_ordenes |
++----------------+---------------+
+| Cliente 1      |             1 |
+| Cliente 2      |             1 |
+| Cliente 3      |             1 |
+| Cliente 4      |             1 |
+| Cliente 5      |             1 |
+| Cliente 6      |             1 |
+| Cliente 7      |             1 |
+| Cliente 8      |             1 |
+| Cliente 9      |             1 |
+| Cliente 10     |             1 |
+| Cliente 11     |             1 |
+| Cliente 12     |             1 |
+| Cliente 13     |             1 |
+| Cliente 14     |             1 |
+| Cliente 15     |             1 |
+| Cliente 16     |             1 |
+| Cliente 17     |             1 |
+| Cliente 18     |             1 |
+| Cliente 19     |             1 |
+| Cliente 20     |             1 |
++----------------+---------------+
+
+
+*/
+--11 Mostrar todas las órdenes junto con el nombre del cliente y el nombre del producto
 select o.id_orden, p.nombre, c.nombre from ordenes as o  join productos as p on p.id_producto=o.id_producto join clientes as c on c.id_cliente=o.id_cliente;
 /*
 +----------+-------------+------------+
@@ -324,4 +459,229 @@ select o.id_orden, p.nombre, c.nombre from ordenes as o  join productos as p on 
 |       19 | Producto 19 | Cliente 19 |
 |       20 | Producto 20 | Cliente 20 |
 +----------+-------------+------------+
+*/
+
+--12 Mostrar todas las órdenes con sus productos y clientes, incluso si no hay información de cliente.
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> INNER JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+
+| id_orden | nombre_cliente | nombre_producto |
++----------+----------------+-----------------+
+|        1 | Cliente 1      | Producto 1      |
+|        2 | Cliente 2      | Producto 2      |
+|        3 | Cliente 3      | Producto 3      |
+|        4 | Cliente 4      | Producto 4      |
+|        5 | Cliente 5      | Producto 5      |
+|        6 | Cliente 6      | Producto 6      |
+|        7 | Cliente 7      | Producto 7      |
+|        8 | Cliente 8      | Producto 8      |
+|        9 | Cliente 9      | Producto 9      |
+|       10 | Cliente 10     | Producto 10     |
+|       11 | Cliente 11     | Producto 11     |
+|       12 | Cliente 12     | Producto 12     |
+|       13 | Cliente 13     | Producto 13     |
+|       14 | Cliente 14     | Producto 14     |
+|       15 | Cliente 15     | Producto 15     |
+|       16 | Cliente 16     | Producto 16     |
+|       17 | Cliente 17     | Producto 17     |
+|       18 | Cliente 18     | Producto 18     |
+|       19 | Cliente 19     | Producto 19     |
+|       20 | Cliente 20     | Producto 20     |
++----------+----------------+-----------------+
+*/
+
+
+--13 Obtener el nombre de los productos junto con el nombre de los clientes que han realizado órdenes de esos productos, incluyendo los productos que no han sido ordenados
+
+SELECT p.nombre AS nombre_producto, c.nombre AS nombre_cliente
+    -> FROM productos p
+    -> LEFT JOIN ordenes o ON p.id_producto = o.id_producto
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente;
+    /*
++-----------------+----------------+
+| nombre_producto | nombre_cliente |
++-----------------+----------------+
+| Producto 1      | Cliente 1      |
+| Producto 2      | Cliente 2      |
+| Producto 3      | Cliente 3      |
+| Producto 4      | Cliente 4      |
+| Producto 5      | Cliente 5      |
+| Producto 6      | Cliente 6      |
+| Producto 7      | Cliente 7      |
+| Producto 8      | Cliente 8      |
+| Producto 9      | Cliente 9      |
+| Producto 10     | Cliente 10     |
+| Producto 11     | Cliente 11     |
+| Producto 12     | Cliente 12     |
+| Producto 13     | Cliente 13     |
+| Producto 14     | Cliente 14     |
+| Producto 15     | Cliente 15     |
+| Producto 16     | Cliente 16     |
+| Producto 17     | Cliente 17     |
+| Producto 18     | Cliente 18     |
+| Producto 19     | Cliente 19     |
+| Producto 20     | Cliente 20     |
++-----------------+----------------+
+*/
+--14     Mostrar todas las órdenes junto con el nombre del cliente y el nombre del producto, incluyendo las órdenes sin productos    Mostrar todas las órdenes junto con el nombre del cliente y el nombre del producto, incluyendo las órdenes sin productos
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> LEFT JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+
+| id_orden | nombre_cliente | nombre_producto |
++----------+----------------+-----------------+
+|        1 | Cliente 1      | Producto 1      |
+|        2 | Cliente 2      | Producto 2      |
+|        3 | Cliente 3      | Producto 3      |
+|        4 | Cliente 4      | Producto 4      |
+|        5 | Cliente 5      | Producto 5      |
+|        6 | Cliente 6      | Producto 6      |
+|        7 | Cliente 7      | Producto 7      |
+|        8 | Cliente 8      | Producto 8      |
+|        9 | Cliente 9      | Producto 9      |
+|       10 | Cliente 10     | Producto 10     |
+|       11 | Cliente 11     | Producto 11     |
+|       12 | Cliente 12     | Producto 12     |
+|       13 | Cliente 13     | Producto 13     |
+|       14 | Cliente 14     | Producto 14     |
+|       15 | Cliente 15     | Producto 15     |
+|       16 | Cliente 16     | Producto 16     |
+|       17 | Cliente 17     | Producto 17     |
+|       18 | Cliente 18     | Producto 18     |
+|       19 | Cliente 19     | Producto 19     |
+|       20 | Cliente 20     | Producto 20     |
++----------+----------------+-----------------+
+*/
+--15 Obtener el nombre de los productos junto con el nombre de los clientes que han realizado órdenes de esos productos, incluyendo los productos que no han sido ordenados
+SELECT p.nombre AS nombre_producto, c.nombre AS nombre_cliente
+    -> FROM productos p
+    -> LEFT JOIN ordenes o ON p.id_producto = o.id_producto
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente;
+    /*
++-----------------+----------------+
+| nombre_producto | nombre_cliente |
++-----------------+----------------+
+| Producto 1      | Cliente 1      |
+| Producto 2      | Cliente 2      |
+| Producto 3      | Cliente 3      |
+| Producto 4      | Cliente 4      |
+| Producto 5      | Cliente 5      |
+| Producto 6      | Cliente 6      |
+| Producto 7      | Cliente 7      |
+| Producto 8      | Cliente 8      |
+| Producto 9      | Cliente 9      |
+| Producto 10     | Cliente 10     |
+| Producto 11     | Cliente 11     |
+| Producto 12     | Cliente 12     |
+| Producto 13     | Cliente 13     |
+| Producto 14     | Cliente 14     |
+| Producto 15     | Cliente 15     |
+| Producto 16     | Cliente 16     |
+| Producto 17     | Cliente 17     |
+| Producto 18     | Cliente 18     |
+| Producto 19     | Cliente 19     |
+| Producto 20     | Cliente 20     |
++-----------------+----------------+
+*/
+
+--16 Mostrar todas las órdenes junto con el nombre del cliente y el nombre del producto, incluyendo las órdenes sin productos
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> LEFT JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+
+| id_orden | nombre_cliente | nombre_producto |
++----------+----------------+-----------------+
+|        1 | Cliente 1      | Producto 1      |
+|        2 | Cliente 2      | Producto 2      |
+|        3 | Cliente 3      | Producto 3      |
+|        4 | Cliente 4      | Producto 4      |
+|        5 | Cliente 5      | Producto 5      |
+|        6 | Cliente 6      | Producto 6      |
+|        7 | Cliente 7      | Producto 7      |
+|        8 | Cliente 8      | Producto 8      |
+|        9 | Cliente 9      | Producto 9      |
+|       10 | Cliente 10     | Producto 10     |
+|       11 | Cliente 11     | Producto 11     |
+|       12 | Cliente 12     | Producto 12     |
+|       13 | Cliente 13     | Producto 13     |
+|       14 | Cliente 14     | Producto 14     |
+|       15 | Cliente 15     | Producto 15     |
+|       16 | Cliente 16     | Producto 16     |
+|       17 | Cliente 17     | Producto 17     |
+|       18 | Cliente 18     | Producto 18     |
+|       19 | Cliente 19     | Producto 19     |
+|       20 | Cliente 20     | Producto 20     |
++----------+----------------+-----------------+
+*/
+
+--17 Obtener el nombre de los clientes junto con el número total de órdenes que han realizado, incluyendo los clientes que no han realizado órdenes.
+
+SELECT c.nombre AS nombre_cliente, COUNT(o.id_orden) AS total_ordenes
+    -> FROM clientes c
+    -> LEFT JOIN ordenes o ON c.id_cliente = o.id_cliente
+    -> GROUP BY c.nombre;
+    /*
++----------------+---------------+
+| nombre_cliente | total_ordenes |
++----------------+---------------+
+| Cliente 1      |             1 |
+| Cliente 2      |             1 |
+| Cliente 3      |             1 |
+| Cliente 4      |             1 |
+| Cliente 5      |             1 |
+| Cliente 6      |             1 |
+| Cliente 7      |             1 |
+| Cliente 8      |             1 |
+| Cliente 9      |             1 |
+| Cliente 10     |             1 |
+| Cliente 11     |             1 |
+| Cliente 12     |             1 |
+| Cliente 13     |             1 |
+| Cliente 14     |             1 |
+| Cliente 15     |             1 |
+| Cliente 16     |             1 |
+| Cliente 17     |             1 |
+| Cliente 18     |             1 |
+| Cliente 19     |             1 |
+| Cliente 20     |             1 |
++----------------+---------------+
+*/
+
+--18 Mostrar todas las órdenes con sus clientes y productos, incluyendo las órdenes y productos que no tienen información
+SELECT o.id_orden, c.nombre AS nombre_cliente, p.nombre AS nombre_producto
+    -> FROM ordenes o
+    -> LEFT JOIN clientes c ON o.id_cliente = c.id_cliente
+    -> LEFT JOIN productos p ON o.id_producto = p.id_producto;
+    /*
++----------+----------------+-----------------+
+| id_orden | nombre_cliente | nombre_producto |
++----------+----------------+-----------------+
+|        1 | Cliente 1      | Producto 1      |
+|        2 | Cliente 2      | Producto 2      |
+|        3 | Cliente 3      | Producto 3      |
+|        4 | Cliente 4      | Producto 4      |
+|        5 | Cliente 5      | Producto 5      |
+|        6 | Cliente 6      | Producto 6      |
+|        7 | Cliente 7      | Producto 7      |
+|        8 | Cliente 8      | Producto 8      |
+|        9 | Cliente 9      | Producto 9      |
+|       10 | Cliente 10     | Producto 10     |
+|       11 | Cliente 11     | Producto 11     |
+|       12 | Cliente 12     | Producto 12     |
+|       13 | Cliente 13     | Producto 13     |
+|       14 | Cliente 14     | Producto 14     |
+|       15 | Cliente 15     | Producto 15     |
+|       16 | Cliente 16     | Producto 16     |
+|       17 | Cliente 17     | Producto 17     |
+|       18 | Cliente 18     | Producto 18     |
+|       19 | Cliente 19     | Producto 19     |
+|       20 | Cliente 20     | Producto 20     |
++----------+----------------+-----------------+
 */
