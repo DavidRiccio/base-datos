@@ -36,11 +36,6 @@ SELECT * FROM productos;
 
 
 */
-
-
-
-
-
     --Mostrar todos los detalles de las órdenes.
 
 
@@ -58,20 +53,12 @@ SELECT * FROM detalles_ordenes;
 
 
 */
-
-
-
-
-
-
     --Mostrar los primeros 5 clientes ordenados por nombre.
 
 
 
 SELECT * FROM clientes ORDER BY nombre_cliente LIMIT 5;
 /*
-
-
 
 +------------+----------------+----------------+
 | id_cliente | nombre_cliente | ciudad_cliente |
@@ -81,14 +68,9 @@ SELECT * FROM clientes ORDER BY nombre_cliente LIMIT 5;
 |          3 | Pedro          | Ciudad C       |
 +------------+----------------+----------------+
 
-
-
-
 */
 
     --Mostrar los productos con un precio mayor a 50.
-
-
 
 SELECT * FROM productos WHERE precio_producto > 50;
 /*
@@ -100,17 +82,10 @@ SELECT * FROM productos WHERE precio_producto > 50;
 |           3 | Producto C      |          100.00 |
 +-------------+-----------------+-----------------+
 
-
-
-
 */
 
 
     --Mostrar todas las órdenes realizadas por el cliente con ID 1.
-
-
-
-
 SELECT * FROM ordenes WHERE id_cliente = 1;
 /*
 +----------+------------+-------------+
@@ -120,33 +95,16 @@ SELECT * FROM ordenes WHERE id_cliente = 1;
 +----------+------------+-------------+
 
 */
-
-
-
-
-
     --Mostrar los clientes cuyos nombres comienzan con la letra "A".
-
-
 select * from clientes where nombre_cliente regexp '^A';
-
-
-    --Mostrar las órdenes que contienen más de 2 productos.
-
-
+    --Mostrar las órdenes que contienen más de 2 productos
 SELECT * FROM ordenes
 WHERE id_orden IN (
     SELECT id_orden FROM detalles_ordenes
     GROUP BY id_orden
     HAVING COUNT(*) > 2
 );
-
-
-
-
     --Mostrar los productos ordenados por precio de forma descendente.
-
-
 
 SELECT * FROM productos ORDER BY precio_producto DESC;
 /* +-------------+-----------------+-----------------+
@@ -156,22 +114,7 @@ SELECT * FROM productos ORDER BY precio_producto DESC;
 |           2 | Producto B      |           75.00 |
 |           1 | Producto A      |           50.00 |
 +-------------+-----------------+-----------------+ */
-
-
-
-
-
-
-
-
-
-
     --Seleccionar todos los clientes y sus órdenes, incluso si no tienen órdenes.
-
-
-
-
-
 SELECT c.*, o.*
     -> FROM clientes c
     -> LEFT JOIN ordenes o ON c.id_cliente = o.id_cliente;
@@ -182,16 +125,7 @@ SELECT c.*, o.*
 |          2 | María          | Ciudad B       |        2 |          2 | 2024-03-02  |
 |          3 | Pedro          | Ciudad C       |        3 |          3 | 2024-03-03  |
 +------------+----------------+----------------+----------+------------+-------------+ */
-
-
-
-
-
-
     --Seleccionar todas las órdenes junto con los productos correspondientes.
-
-
-
 SELECT o.*, p.*
     -> FROM ordenes o
     -> JOIN detalles_ordenes do ON o.id_orden = do.id_orden
@@ -204,12 +138,6 @@ SELECT o.*, p.*
 |        3 |          3 | 2024-03-03  |           3 | Producto C      |          100.00 |
 +----------+------------+-------------+-------------+-----------------+-----------------+
  */
-
-
-
-
-
-
     --Mostrar el nombre de los clientes que han realizado órdenes de productos que cuestan más de 50.
 
 
@@ -354,7 +282,20 @@ SELECT o.id_orden, c.nombre_cliente, p.nombre_producto
 
 
 
-
+SELECT do.*, c.nombre_cliente, p.nombre_producto FROM ordenes as o  
+RIGHT JOIN clientes as c on c.id_cliente=o.id_cliente 
+JOIN detalles_ordenes as do on do.id_orden=o.id_orden 
+JOIN productos as p on p.id_producto=do.id_producto;
+/**
++------------+----------+-------------+----------+----------------+-----------------+
+| id_detalle | id_orden | id_producto | cantidad | nombre_cliente | nombre_producto |
++------------+----------+-------------+----------+----------------+-----------------+
+|          1 |        1 |           1 |        2 | Juan           | Producto A      |
+|          2 |        2 |           2 |        1 | María          | Producto B      |
+|          3 |        3 |           3 |        3 | Pedro          | Producto C      |
++------------+----------+-------------+----------+----------------+-----------------+
+3 rows in set (0,00 sec)
+**/
 
 
 
@@ -365,7 +306,20 @@ SELECT o.id_orden, c.nombre_cliente, p.nombre_producto
 
 
 
-
+SELECT do.*, c.nombre_cliente, p.nombre_producto FROM ordenes as o  
+    ->     JOIN clientes as c on c.id_cliente=o.id_cliente 
+    ->     LEFT JOIN detalles_ordenes as do on do.id_orden=o.id_orden 
+    ->     JOIN productos as p on p.id_producto=do.id_producto;
+/**
++------------+----------+-------------+----------+----------------+-----------------+
+| id_detalle | id_orden | id_producto | cantidad | nombre_cliente | nombre_producto |
++------------+----------+-------------+----------+----------------+-----------------+
+|          1 |        1 |           1 |        2 | Juan           | Producto A      |
+|          2 |        2 |           2 |        1 | María          | Producto B      |
+|          3 |        3 |           3 |        3 | Pedro          | Producto C      |
++------------+----------+-------------+----------+----------------+-----------------+
+3 rows in set (0,00 sec)
+**/
 
 
 
@@ -378,7 +332,20 @@ SELECT o.id_orden, c.nombre_cliente, p.nombre_producto
 
 
 
-
+SELECT o.*, c.*, p.* from clientes as c 
+    -> RIGHT JOIN ordenes as o ON c.id_cliente=o.id_cliente
+    -> RIGHT JOIN detalles_ordenes as do ON o.id_orden=do.id_orden
+    -> RIGHT JOIN productos as p ON do.id_producto=p.id_producto;
+/**
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+| id_orden | id_cliente | fecha_orden | id_cliente | nombre_cliente | ciudad_cliente | id_producto | nombre_producto | precio_producto |
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+|        1 |          1 | 2024-03-01  |          1 | Juan           | Ciudad A       |           1 | Producto A      |           50.00 |
+|        2 |          2 | 2024-03-02  |          2 | María          | Ciudad B       |           2 | Producto B      |           75.00 |
+|        3 |          3 | 2024-03-03  |          3 | Pedro          | Ciudad C       |           3 | Producto C      |          100.00 |
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+3 rows in set (0,00 sec)
+**/
 
 
 
@@ -416,7 +383,20 @@ SELECT c.nombre_cliente, COUNT(o.id_orden) AS total_ordenes
 
 
 
-
+SELECT o.*, c.*, p.* from clientes as c 
+    -> RIGHT JOIN ordenes as o ON c.id_cliente=o.id_cliente
+    -> RIGHT JOIN detalles_ordenes as do ON o.id_orden=do.id_orden
+    -> RIGHT JOIN productos as p ON do.id_producto=p.id_producto;
+/**
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+| id_orden | id_cliente | fecha_orden | id_cliente | nombre_cliente | ciudad_cliente | id_producto | nombre_producto | precio_producto |
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+|        1 |          1 | 2024-03-01  |          1 | Juan           | Ciudad A       |           1 | Producto A      |           50.00 |
+|        2 |          2 | 2024-03-02  |          2 | María          | Ciudad B       |           2 | Producto B      |           75.00 |
+|        3 |          3 | 2024-03-03  |          3 | Pedro          | Ciudad C       |           3 | Producto C      |          100.00 |
++----------+------------+-------------+------------+----------------+----------------+-------------+-----------------+-----------------+
+3 rows in set (0,00 sec)
+**/
 
 
 
